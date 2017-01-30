@@ -1,0 +1,21 @@
+<div class="logout_bar">
+  <a href="/groups">Dashboard</a>
+  <a href="/users/logout">logout</a>
+</div>
+
+<div class="group_details">
+  <h2><%=@group.name%></h2>
+  <% if !@group.members.exists?(:user_id => session[:id])%>
+    <form class="" action="/groups/join/<%=@group.id%>/<%=session[:id]%>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="submit" name="" value="Join Group">
+    </form>
+  <% else %>
+    <form class="" action="/groups/leave/<%=@group.id%>/<%=session[:id]%>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="submit" name="" value="Leave Group">
+    </form>
+  <%end%>
+  <h3>Created By: <%=@group.user.first_name%> <%=@group.user.last_name%></h3>
+    Members: TBA
+</div>

@@ -1,0 +1,41 @@
+<h1>Welcome!</h1>
+<div id="Registration_Form">
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |error| %>
+     <h4> <%= error[1][0] unless error[0] == "password" %> </h4>
+     <h4> <%= error[1][1] if error[0] == "password" %> </h4>
+    <% end %>
+   <%if flash[:notice] %>
+     <div class="Regis_notice"><%= flash[:notice] %> </div>
+   <%end%>
+  <% end %>
+  <h2>Register</h2>
+  <form  action="/users/create" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      First Name:
+      <input type="text" name='firstname' required> <br>
+      Last Name:
+      <input type="text" name='lastname' required> <br>
+      Email:
+      <input type="text" name='email' required> <br>
+      Password:   <input type="password" name="password" value="" required> <br>
+      Confirm PW: <input type="password" name="password_confirmation" value="" required> <br>
+      <input type="submit" value="Register" class="input-submit"> <br>
+  </form> <br>
+</div>
+
+<div id="Login_Form">
+  <h2>Login</h2>
+  <% if flash[:errors] %>
+   <% flash[:errors].each do |error| %>
+   <h4> <%= error[1][0] unless error[0] == "password" %> </h4>
+   <h4> <%= error[1][1] if error[0] == "password" %> </h4>
+   <% end %>
+  <% end %>
+<form  action="/users/login" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    Email:<input type="text" name='email' required> <br>
+    Password:<input type="password" name="password" required> <br>
+    <input type="submit" value="Login" class="input-submit"> <br>
+</form> <br>
+</div>

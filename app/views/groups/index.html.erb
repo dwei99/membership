@@ -1,0 +1,35 @@
+<h1>Hi <%=@user.first_name%> <%=@user.last_name%> </h1>
+<div class="logout_bar">
+  <a href="/users/logout">logout</a>
+</div>
+<p>Here are the organizations you may join.</p>
+<div class="groups_list">
+  <% @groups.each do |group| %>
+    <ol>
+      <li> <% if group.user_id = session[:id] %>
+        <a href="/groups/<%=group.id%>">x</a> <%end%>
+        <a href="/groups/<%=group.id%>"><%=group.name%></a></li>
+      <li>Members: <%=group.members.count(:user_id)%></li>
+      <li><%=group.description%></li>
+    </ol>
+  <%end%>
+</div>
+<div id="org_form">
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |error| %>
+     <h4> <%= error[1][0] unless error[0] == "password" %> </h4>
+     <h4> <%= error[1][1] if error[0] == "password" %> </h4>
+    <% end %>
+   <%if flash[:notice] %>
+     <div class="Regis_notice"><%= flash[:notice] %> </div>
+   <%end%>
+  <% end %>
+  <form action="/groups/create" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <h4>Create a new organization</h4>
+    Org Name: <input type="text" name="org_name" required minlength="6"> <br>
+    Description: <input type="text" name="org_desc" required minlength="11"> <br>
+    <input type="submit" value="Create">
+  </form>
+
+</div>
